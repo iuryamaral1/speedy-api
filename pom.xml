@@ -16,7 +16,7 @@
 	   		<name>Iury Drayton Souza Amaral</name>
 	   		<email>iurydrayton@gmail.com</email>
 	   	</developer>
-  </developers>
+    </developers>
 	
 	<parent>
 		<groupId>org.springframework.boot</groupId>
