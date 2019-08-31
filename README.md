@@ -3,9 +3,10 @@ API for Speedy Application
 
 Technologies used to build this application:
 
--- Spring Boot
--- Hibernate
--- JPA
--- JWT
--- Maven
--- PostgreSQL
+1) Spring Boot
+2) Hibernate
+3) JPA
+4) PostgreSQL
+5) JWT
+6) Maven
+
