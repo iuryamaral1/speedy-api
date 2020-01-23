@@ -1,7 +1,5 @@
 package com.speedy.domain;
 
-import static com.speedy.domain.User.CHARACTER_VARYING;
-import static com.speedy.domain.User.DISCRIMINATOR_TYPE;
 import static javax.persistence.InheritanceType.JOINED;
 
 import java.util.HashSet;
@@ -34,14 +32,8 @@ import org.hibernate.annotations.NaturalId;
         })
 })
 @Inheritance(strategy = JOINED)
-@DiscriminatorColumn(
-		discriminatorType = DiscriminatorType.STRING,
-		name = DISCRIMINATOR_TYPE,
-		columnDefinition = CHARACTER_VARYING)
 public class User extends DateAudit {
 
-	public static final String DISCRIMINATOR_TYPE = "user_type";
-	public static final String CHARACTER_VARYING = "CHARACTER VARYING(20)";
 	private static final long serialVersionUID = 1L;
 
 	@Id

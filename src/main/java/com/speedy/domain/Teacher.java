@@ -2,15 +2,15 @@ package com.speedy.domain;
 
 import java.util.List;
 
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "teacher")
-@DiscriminatorValue("TEACHER")
+@PrimaryKeyJoinColumn(name = "user_id")
 @SequenceGenerator(name = "teacher_seq", sequenceName = "teacher_seq")
 public class Teacher extends User {
 

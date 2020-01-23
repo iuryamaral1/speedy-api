@@ -3,6 +3,7 @@ package com.speedy.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -23,7 +24,7 @@ public class Subject {
 	private String name;
 	
 	@ManyToOne
-	@Column(name = "teacher_id")
+	@JoinColumn(name = "teacher_id")
 	private Teacher teacher;
 
 	public Long getId() {
