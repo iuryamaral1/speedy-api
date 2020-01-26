@@ -2,6 +2,7 @@ package com.speedy.resources;
 
 import java.net.URI;
 import java.util.Collections;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -64,7 +65,21 @@ public class AuthResource {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+        
+        JwtAuthenticationResponse jwtAuthenticationResponse = new JwtAuthenticationResponse(jwt);
+        
+        User user = null;
+        
+        if (jwtAuthenticationResponse.getAccessToken() != null && !jwtAuthenticationResponse.getAccessToken().isEmpty()) {
+        	Optional<User> userFound = this.userRepository.findByUsernameOrEmail(loginRequest.getUsernameOrEmail(), loginRequest.getUsernameOrEmail());
+        	if (userFound.isPresent()) {
+        		user = userFound.get();
+        		user.setToken(jwtAuthenticationResponse.getAccessToken());
+        		user = this.userRepository.saveAndFlush(user);
+        	}
+        }
+        
+        return ResponseEntity.ok(user);
     }
 
     
