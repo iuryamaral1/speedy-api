@@ -4,12 +4,14 @@ import static javax.persistence.EnumType.STRING;
 import static javax.persistence.TemporalType.DATE;
 
 import java.util.Date;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotBlank;
@@ -20,6 +22,7 @@ import com.speedy.constraints.Phone;
 
 @Entity
 @Table(name = "student")
+@PrimaryKeyJoinColumn(name = "student_id")
 public class Student extends User {
 
 	private static final long serialVersionUID = -4877202754073359373L;
@@ -59,6 +62,12 @@ public class Student extends User {
 	@NotBlank
 	@Column(name = "mother_name", nullable = false)
 	private String motherName;
+	
+	@NotNull
+	@NotBlank
+	@NotEmpty
+	@Column(name = "registration_number", unique = true, nullable = false, updatable = false)
+	private String registrationNumber;
 
 	public StudentClass getStudentClass() {
 		return studentClass;
@@ -122,5 +131,17 @@ public class Student extends User {
 
 	public void setMotherName(String motherName) {
 		this.motherName = motherName;
+	}
+
+	public String getRegistrationNumber() {
+		return registrationNumber;
+	}
+
+	public void setRegistrationNumber(String registrationNumber) {
+		this.registrationNumber = registrationNumber;
+	}
+	
+	public void generateRegistrationNumber() {
+		setRegistrationNumber(UUID.randomUUID().toString());
 	}
 }

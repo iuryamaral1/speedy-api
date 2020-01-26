@@ -5,8 +5,6 @@ import static javax.persistence.InheritanceType.JOINED;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;

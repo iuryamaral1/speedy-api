@@ -1,5 +1,9 @@
 package com.speedy.repositories;
 
-public interface StudentRepository {
+import java.io.Serializable;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface StudentRepository extends JpaRepository<Long, Serializable> {
 
 }
