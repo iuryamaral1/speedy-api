@@ -1,9 +1,10 @@
 package com.speedy.repositories;
 
-import java.io.Serializable;
+import javax.transaction.Transactional;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.speedy.domain.Student;
 
-public interface StudentRepository extends JpaRepository<Long, Serializable> {
+@Transactional
+public interface StudentRepository extends UserRepository<Student> {
 
 }

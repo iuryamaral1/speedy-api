@@ -14,7 +14,7 @@ import com.speedy.repositories.UserRepository;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    UserRepository userRepository;
+    UserRepository<User> userRepository;
 
     @Override
     @Transactional

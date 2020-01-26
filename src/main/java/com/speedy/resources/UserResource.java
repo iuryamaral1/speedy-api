@@ -20,37 +20,37 @@ import com.speedy.repositories.UserRepository;
 @RestController
 @RequestMapping("/users")
 public class UserResource {
-	
+
 	@Autowired
-	private UserRepository userRepository;
-	
+	private UserRepository<User> userRepository;
+
 	@GetMapping
 	public List<User> findAll() {
-		return this.userRepository.findAll();
+		return (List<User>) this.userRepository.findAll();
 	}
-	
+
 	@GetMapping("/{username}")
 	@RolesAllowed("ROLE_USER")
 	public ResponseEntity<User> findByUsername(@PathVariable("username") String username) {
-		
+
 		if (username == null || username.isEmpty()) {
 			return ResponseEntity.badRequest().build();
 		}
-		
+
 		User user = this.userRepository.findByUsername(username);
 		user.setPassword(null);
 		return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
 	}
-	
+
 	@PutMapping
 	public ResponseEntity<User> updateUser(@Valid @RequestBody User user) {
-		
+
 		if (user == null) {
 			return ResponseEntity.badRequest().build();
 		}
-		
-		User updatedUser = this.userRepository.saveAndFlush(user);
+
+		User updatedUser = this.userRepository.save(user);
 		return ResponseEntity.ok(updatedUser);
 	}
-	
+
 }

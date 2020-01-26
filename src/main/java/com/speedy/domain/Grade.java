@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -21,7 +21,7 @@ public class Grade {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "grade_seq")
 	private Long id;
 	
-	@ManyToOne
+	@OneToMany(mappedBy = "grade")
 	private List<StudentClass> studentClasses;
 	
 	public Long getId() {

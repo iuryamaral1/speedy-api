@@ -25,7 +25,7 @@ public class Address {
 	@Column(name = "street_name", nullable = false)
 	private String streetName;
 	
-	@Column(name = "number")
+	@Column(name = "number_house")
 	private String number;
 	
 	@OneToOne

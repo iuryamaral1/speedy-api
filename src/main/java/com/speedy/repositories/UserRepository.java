@@ -1,27 +1,28 @@
 package com.speedy.repositories;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.speedy.domain.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository<T extends User> extends CrudRepository<T, Serializable> {
 
-	Optional<User> findByEmail(String email);
+	Optional<T> findByEmail(String email);
 
-    Optional<User> findByUsernameOrEmail(String username, String email);
+    Optional<T> findByUsernameOrEmail(String username, String email);
 
-    List<User> findByIdIn(List<Long> userIds);
+    List<T> findByIdIn(List<Long> userIds);
 
-    User findByUsername(String username);
+    T findByUsername(String username);
 
     Boolean existsByUsername(String username);
 
     Boolean existsByEmail(String email);
 
-	Optional<User> findById(Long id);
+	Optional<T> findById(Long id);
 }

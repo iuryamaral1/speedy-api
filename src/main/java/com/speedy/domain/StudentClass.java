@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -29,8 +31,11 @@ public class StudentClass {
 	@ManyToMany
 	private List<Teacher> teachers;
 	
-	@ManyToOne
+	@OneToMany(mappedBy = "studentClass")
 	private List<Student> students;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Grade grade;
 
 	public Long getId() {
 		return id;

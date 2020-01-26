@@ -10,7 +10,9 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
-import javax.persistence.OneToMany;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -27,11 +29,11 @@ public class Student extends User {
 
 	private static final long serialVersionUID = -4877202754073359373L;
 
-	@OneToMany
+	@ManyToOne(fetch = FetchType.LAZY)
 	private StudentClass studentClass;
 	
 	@NotNull
-	@Column(name = "school_hours", nullable = false)
+	@OneToOne
 	private SchoolHours schoolHours;
 	
 	@NotNull

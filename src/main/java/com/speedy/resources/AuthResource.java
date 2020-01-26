@@ -41,7 +41,7 @@ public class AuthResource {
     AuthenticationManager authenticationManager;
 
     @Autowired
-    UserRepository userRepository;
+    UserRepository<User> userRepository;
 
     @Autowired
     RoleRepository roleRepository;
@@ -75,7 +75,7 @@ public class AuthResource {
         	if (userFound.isPresent()) {
         		user = userFound.get();
         		user.setToken(jwtAuthenticationResponse.getAccessToken());
-        		user = this.userRepository.saveAndFlush(user);
+        		user = this.userRepository.save(user);
         	}
         }
         
@@ -83,7 +83,8 @@ public class AuthResource {
     }
 
     
-    @PostMapping(value = "/signup", consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	@PostMapping(value = "/signup", consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
         if(userRepository.existsByUsername(signUpRequest.getUsername())) {
             return new ResponseEntity(new ApiResponse(false, "Username is already taken!"),
