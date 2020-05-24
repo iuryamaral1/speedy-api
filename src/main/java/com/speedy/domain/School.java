@@ -15,6 +15,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.br.CNPJ;
 
 @Entity
 @Table(name = "school")
@@ -28,11 +31,20 @@ public class School {
 	@NotNull
 	@NotBlank
 	@NotEmpty
+	@Size(min = 1, max = 200)
 	@Column(name = "name", nullable = false)
 	private String name;
 	
 	@OneToMany
 	private List<Student> students;
+	
+	@CNPJ
+	@NotNull
+	@NotEmpty
+	@NotBlank
+	@Size(max = 14)
+	@Column(name = "cnpj", length = 14)
+	private String cnpj;
 	
 	@OneToOne(mappedBy = "school")
 	private SchoolPrincipal schoolPrincipal;
@@ -100,5 +112,13 @@ public class School {
 
 	public void setGrades(List<Grade> grades) {
 		this.grades = grades;
+	}
+
+	public String getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
 	}
 }

@@ -40,9 +40,6 @@ public class User extends DateAudit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 40)
-    private String name;
-
     @Size(max = 15)
     private String username;
 
@@ -72,8 +69,8 @@ public class User extends DateAudit {
 
     }
 
-    public User(String name, String username, String email, String password) {
-        this.name = name;
+    public User(String firstName, String username, String email, String password) {
+    	this.firstName = firstName;
         this.username = username;
         this.email = email;
         this.password = password;
@@ -93,14 +90,6 @@ public class User extends DateAudit {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getEmail() {

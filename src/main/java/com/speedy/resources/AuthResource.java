@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -55,31 +56,35 @@ public class AuthResource {
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsernameOrEmail(),
-                        loginRequest.getPassword()
-                )
-        );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        String jwt = tokenProvider.generateToken(authentication);
-        
-        JwtAuthenticationResponse jwtAuthenticationResponse = new JwtAuthenticationResponse(jwt);
-        
-        User user = null;
-        
-        if (jwtAuthenticationResponse.getAccessToken() != null && !jwtAuthenticationResponse.getAccessToken().isEmpty()) {
-        	Optional<User> userFound = this.userRepository.findByUsernameOrEmail(loginRequest.getUsernameOrEmail(), loginRequest.getUsernameOrEmail());
-        	if (userFound.isPresent()) {
-        		user = userFound.get();
-        		user.setToken(jwtAuthenticationResponse.getAccessToken());
-        		user = this.userRepository.save(user);
-        	}
-        }
-        
-        return ResponseEntity.ok(user);
+    	try {
+	        Authentication authentication = authenticationManager.authenticate(
+	                new UsernamePasswordAuthenticationToken(
+	                        loginRequest.getUsernameOrEmail(),
+	                        loginRequest.getPassword()
+	                )
+	        );
+	
+	        SecurityContextHolder.getContext().setAuthentication(authentication);
+	
+	        String jwt = tokenProvider.generateToken(authentication);
+	        
+	        JwtAuthenticationResponse jwtAuthenticationResponse = new JwtAuthenticationResponse(jwt);
+	        
+	        User user = null;
+	        
+	        if (jwtAuthenticationResponse.getAccessToken() != null && !jwtAuthenticationResponse.getAccessToken().isEmpty()) {
+	        	Optional<User> userFound = this.userRepository.findByUsernameOrEmail(loginRequest.getUsernameOrEmail(), loginRequest.getUsernameOrEmail());
+	        	if (userFound.isPresent()) {
+	        		user = userFound.get();
+	        		user.setToken(jwtAuthenticationResponse.getAccessToken());
+	        		user = this.userRepository.save(user);
+	        	}
+	        }
+	        
+	        return ResponseEntity.ok(user);
+    	} catch (BadCredentialsException error) {
+    		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    	}
     }
 
     

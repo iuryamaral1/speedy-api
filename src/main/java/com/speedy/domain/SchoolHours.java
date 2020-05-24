@@ -22,4 +22,20 @@ public class SchoolHours {
 	//disciplina
 	@OneToMany
 	private List<Subject> subjects;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public List<Subject> getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(List<Subject> subjects) {
+		this.subjects = subjects;
+	}
 }
