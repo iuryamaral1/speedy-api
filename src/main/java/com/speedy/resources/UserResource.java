@@ -41,7 +41,7 @@ public class UserResource {
 		user.setPassword(null);
 		return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
 	}
-
+	
 	@PutMapping
 	public ResponseEntity<User> updateUser(@Valid @RequestBody User user) {
 
